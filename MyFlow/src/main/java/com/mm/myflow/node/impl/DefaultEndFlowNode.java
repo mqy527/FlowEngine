@@ -3,7 +3,6 @@ package com.mm.myflow.node.impl;
 import com.mm.myflow.exe.ExecutionContext;
 import com.mm.myflow.node.AbstractFlowNode;
 import com.mm.myflow.node.EndFlowNode;
-import com.mm.myflow.node.SuspendedFlowNode;
 
 /**
  * 流程结束节点
