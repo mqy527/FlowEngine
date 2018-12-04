@@ -1,5 +1,12 @@
 package com.mm.myflow.mock.engine;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
 import com.mm.myflow.exe.ExecutionContext;
 import com.mm.myflow.flow.Flow;
 import com.mm.myflow.flow.MyFlowBuilder;
@@ -9,11 +16,8 @@ import com.mm.myflow.mock.node.MockGateWayFlowNode;
 import com.mm.myflow.mock.node.MockServiceFlowNode;
 import com.mm.myflow.mock.node.MockUserTaskFlowNode;
 import com.mm.myflow.node.FlowNode;
-import com.mm.myflow.node.FlowNodeRecorder;
-import com.mm.myflow.node.impl.*;
-import org.junit.Test;
-
-import java.util.*;
+import com.mm.myflow.node.recorder.FlowNodeRecorder;
+import com.mm.myflow.node.recorder.LogFlowNodeRecorder;
 
 /**
  * @author mengqingyan 2018/12/4

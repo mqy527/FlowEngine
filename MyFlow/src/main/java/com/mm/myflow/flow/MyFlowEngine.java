@@ -6,15 +6,18 @@ import java.util.Map;
 import com.mm.myflow.ex.FlowErrorException;
 import com.mm.myflow.ex.FlowNotFoundException;
 import com.mm.myflow.exe.ExecutionContext;
-import com.mm.myflow.node.*;
+import com.mm.myflow.node.FlowNode;
+import com.mm.myflow.node.GateWayFlowNode;
+import com.mm.myflow.node.SuspendedFlowNode;
 import com.mm.myflow.node.impl.DefaultEndFlowNode;
+import com.mm.myflow.node.recorder.FlowNodeRecorder;
 
 /**
  * @author mengqingyan 2018/12/3
  */
 public class MyFlowEngine implements FlowEngine, FlowRegistrar {
 
-    private FlowNodeRecorder  flowNodeRecorder;
+    private FlowNodeRecorder flowNodeRecorder;
 
     private Map<String, Flow> flowMap = new HashMap<>();
 

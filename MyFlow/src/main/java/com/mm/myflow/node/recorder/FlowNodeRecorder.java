@@ -1,8 +1,9 @@
-package com.mm.myflow.node;
+package com.mm.myflow.node.recorder;
 
 import com.mm.myflow.exe.ExecutionContext;
 import com.mm.myflow.flow.BusinessCurrentPosition;
 import com.mm.myflow.flow.Flow;
+import com.mm.myflow.node.FlowNode;
 
 /**
  * @author mengqingyan 2018/12/3
