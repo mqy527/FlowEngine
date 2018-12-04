@@ -9,6 +9,11 @@ public class BusinessCurrentPosition {
 
     private String flowNodeName;
 
+    public BusinessCurrentPosition(String flowName, String flowNodeName) {
+        this.flowName = flowName;
+        this.flowNodeName = flowNodeName;
+    }
+
     public String getFlowName() {
         return flowName;
     }

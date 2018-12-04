@@ -1,14 +1,10 @@
 package com.mm.myflow.node;
 
-import com.mm.myflow.exe.ExecutionContext;
+import com.mm.myflow.node.FlowNode;
 
 /**
- * 流程结束节点
- * @author mengqingyan 2018/12/3
+ * 结束节点
+ * @author mengqingyan 2018/12/4
  */
-public class EndFlowNode extends AbstractFlowNode {
-    @Override
-    public Object execute(ExecutionContext executionContext) {
-        return null;
-    }
+public interface EndFlowNode extends FlowNode, SuspendedFlowNode {
 }

@@ -1,26 +1,22 @@
 package com.mm.myflow.flow;
 
-import com.mm.myflow.ex.FlowConfigErrorException;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.mm.myflow.ex.FlowErrorException;
 import com.mm.myflow.ex.FlowNotFoundException;
 import com.mm.myflow.exe.ExecutionContext;
 import com.mm.myflow.node.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.mm.myflow.node.impl.DefaultEndFlowNode;
 
 /**
  * @author mengqingyan 2018/12/3
  */
-public class MyFlowEngine implements FlowEngine {
+public class MyFlowEngine implements FlowEngine, FlowRegistrar {
 
     private FlowNodeRecorder  flowNodeRecorder;
 
     private Map<String, Flow> flowMap = new HashMap<>();
-
-    public void init() {
-
-    }
 
     @Override
     public void triggerFlow(String flowName, ExecutionContext executionContext) throws Exception {
@@ -45,21 +41,34 @@ public class MyFlowEngine implements FlowEngine {
             if (flow == null) {
                 throw new FlowNotFoundException("找不到流程： " + flowName);
             }
-            tmpFlowNode = flow.getNextFlowNode(businessCurrentPosition.getFlowNodeName(), executionContext);
+            tmpFlowNode = flow.getFlowNode(businessCurrentPosition.getFlowNodeName());
         }
 
-        while (!(tmpFlowNode instanceof SuspendedFlowNode)) {
+        do {
             Object executeResult = tmpFlowNode.execute(executionContext);
-            flowNodeRecorder.record(tmpFlowNode, executionContext, executeResult);
+            flowNodeRecorder.record(flow, tmpFlowNode, executionContext, executeResult);
+            executionContext.setPreResult(executeResult);
             if (tmpFlowNode instanceof GateWayFlowNode) {
-                if (GateWayFlowNode.PAUSE.equals(executeResult)) {
-                    break;
-                }
-                tmpFlowNode = flow.getNextFlowNode(executeResult.toString(), executionContext);
+                tmpFlowNode = flow.getFlowNode(executeResult.toString());
+            } else {
+                tmpFlowNode = flow.getNextFlowNode(tmpFlowNode.getName(), executionContext);
             }
-
-            tmpFlowNode = flow.getNextFlowNode(tmpFlowNode.getName(), executionContext);
+        } while (tmpFlowNode != null && !(tmpFlowNode instanceof SuspendedFlowNode));
+        // 执行最后一个暂停的节点
+        if((tmpFlowNode instanceof DefaultEndFlowNode)) {
+            Object executeResult = tmpFlowNode.execute(executionContext);
+            flowNodeRecorder.record(flow, tmpFlowNode, executionContext, executeResult);
         }
+        flowNodeRecorder.record(flow, tmpFlowNode, executionContext, "STOP_BY");
+
     }
 
+    @Override
+    public void registerFLow(Flow flow) {
+        flowMap.put(flow.getFlowName(), flow);
+    }
+
+    public void setFlowNodeRecorder(FlowNodeRecorder flowNodeRecorder) {
+        this.flowNodeRecorder = flowNodeRecorder;
+    }
 }

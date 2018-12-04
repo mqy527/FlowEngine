@@ -1,14 +1,23 @@
 package com.mm.myflow.node;
 
+
 import java.util.Objects;
 
 /**
  * @author mengqingyan 2018/12/3
  */
-public abstract class AbstractFlowNode implements FlowNode {
+public abstract class AbstractFlowNode<R> implements FlowNode<R> {
 
     private String name;
     private String description;
+
+    public AbstractFlowNode() {
+    }
+
+    public AbstractFlowNode(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     public String getName() {
         return name;
@@ -40,4 +49,5 @@ public abstract class AbstractFlowNode implements FlowNode {
 
         return Objects.hash(name, description);
     }
+
 }

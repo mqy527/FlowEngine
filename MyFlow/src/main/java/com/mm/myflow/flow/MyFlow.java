@@ -75,9 +75,6 @@ public class MyFlow implements Flow{
         }
         GateWayFlowNode gateWayFlowNode = (GateWayFlowNode) currentFlowNode;
         String nextFlowNodeName = gateWayFlowNode.execute(executionContext);
-        if(GateWayFlowNode.PAUSE.equals(nextFlowNodeName)) {
-            return currentFlowNode;
-        }
         return getFlowNode(nextFlowNodeName);
     }
 
